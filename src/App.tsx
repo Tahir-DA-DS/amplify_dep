@@ -65,20 +65,27 @@ const reducer = (state: AppState, action: Action) => {
 };
 
 const App: React.FC = () => {
-  const createNewRestaurant = async (e: React.SyntheticEvent) => {
-    e.stopPropagation();
-    const { name, description, city } = state.formData;
-    const restaurant = {
-      name,
-      description,
-      city,
-    };
-    await API.graphql(
-      graphqlOperation(createRestaurant, { input: restaurant }),
-    );
-  };
-
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const createNewRestaurant = async (e: React.SyntheticEvent) => {
+    e.preventDefault(); 
+    e.stopPropagation();
+  
+    const { name, description, city } = state.formData;
+    if (!name || !description || !city) {
+      alert("All fields are required!");
+      return;
+    }
+  
+    try {
+      const restaurant = { name, description, city };
+      await API.graphql(graphqlOperation(createRestaurant, { input: restaurant }));
+      console.log("Restaurant added successfully!");
+    } catch (error) {
+      console.error("Error adding restaurant:", error);
+    }
+  };
+  // const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     getRestaurantList();
@@ -105,11 +112,12 @@ const App: React.FC = () => {
     });
   };
 
-  const handleChange = (e: any) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'SET_FORM_DATA',
       payload: { [e.target.name]: e.target.value },
     });
+  };
 
   return (
     <div className="App">
