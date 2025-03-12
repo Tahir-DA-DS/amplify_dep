@@ -2,14 +2,14 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
 import React, { useEffect, useReducer } from 'react';
 import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap';
-import awsmobile from "./aws-exports";
+// import awsmobile from "./aws-exports";
 import './App.css';
 import awsConfig from './aws-exports';
 import { createRestaurant } from './graphql/mutations';
 import { listRestaurants } from './graphql/queries';
 import { onCreateRestaurant } from './graphql/subscriptions';
 
-Amplify.configure(awsmobile);
+// Amplify.configure(awsmobile);
 Amplify.configure(awsConfig);
 
 type Restaurant = {
