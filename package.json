@@ -1,5 +1,5 @@
 {
-  "name": "my_yield",
+  "name": "amplify_dep",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
