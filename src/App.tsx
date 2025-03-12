@@ -112,7 +112,7 @@ const App: React.FC = () => {
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<any>) => {
     dispatch({
       type: 'SET_FORM_DATA',
       payload: { [e.target.name]: e.target.value },
