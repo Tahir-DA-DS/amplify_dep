@@ -10,6 +10,14 @@
       "StackName": "amplify-myyield-dev-05ba3",
       "StackId": "arn:aws:cloudformation:us-east-1:515966497218:stack/amplify-myyield-dev-05ba3/634ae550-ff3f-11ef-8414-0e2cdde31cbf",
       "AmplifyAppId": "d3fdkuwk3dtili"
+    },
+    "categories": {
+      "auth": {
+        "myyieldbce89d08": {}
+      },
+      "api": {
+        "myyield": {}
+      }
     }
   }
 }
