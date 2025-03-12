@@ -2,6 +2,9 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
 import React, { useEffect, useReducer } from 'react';
 import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap';
+import awsmobile from "./aws-exports";
+
+Amplify.configure(awsmobile);
 
 import './App.css';
 import awsConfig from './aws-exports';
