@@ -10,6 +10,7 @@ type Todo @model {
 
 type Restaurant @model {
   id: ID!
+  clientId?: string | null
   name: String!
   description: String!
   city: String!
