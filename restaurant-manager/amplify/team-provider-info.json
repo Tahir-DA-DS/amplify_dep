@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-restaurantmanager-dev-de262-authRole",
+      "UnauthRoleArn": "arn:aws:iam::515966497218:role/amplify-restaurantmanager-dev-de262-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::515966497218:role/amplify-restaurantmanager-dev-de262-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-restaurantmanager-dev-de262-deployment",
+      "UnauthRoleName": "amplify-restaurantmanager-dev-de262-unauthRole",
+      "StackName": "amplify-restaurantmanager-dev-de262",
+      "StackId": "arn:aws:cloudformation:us-east-1:515966497218:stack/amplify-restaurantmanager-dev-de262/6dd24f00-01f5-11f0-a0eb-0affe11aba53",
+      "AmplifyAppId": "d2jo16eh1brasx"
+    },
+    "categories": {
+      "auth": {
+        "restaurantmanager8fc3555a": {}
+      },
+      "api": {
+        "restaurantmanager": {}
+      }
+    }
+  }
+}
