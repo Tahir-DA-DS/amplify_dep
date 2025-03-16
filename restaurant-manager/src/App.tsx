@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/api"; 
 import { listRestuarants } from "./graphql/queries";
-import { createRestuarant } from "./graphql/mutations";
+import { createRestuarant, updateRestaurant, deleteRestaurant } from "./graphql/mutations";
 import { Restaurant } from "./types.ts";
 import awsExports from "./aws-exports";
 import { v4 as uuidv4 } from "uuid";
@@ -22,6 +22,8 @@ function App() {
     city: "",
   });
 
+  const [editingRestaurant, setEditingRestaurant] = useState<Restaurant | null>(null);
+
   useEffect(() => {
     fetchRestaurants();
   }, []);
@@ -30,7 +32,6 @@ function App() {
     try {
       const response = await client.graphql({ query: listRestuarants });
   
-      // Ensure TypeScript only uses the expected properties
       const items = response.data.listRestuarants.items.map((restaurant: any) => ({
         id: restaurant.id,
         clientId: restaurant.clientId ?? "", 
@@ -75,12 +76,62 @@ function App() {
     }
   };
 
+  const startEdit = (restaurant: Restaurant) => {
+    setEditingRestaurant(restaurant);
+    setNewRestaurant({
+      name: restaurant.name,
+      description: restaurant.description ?? "",
+      city: restaurant.city ?? "",
+    });
+  };
+
+  const updateRestaurantData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingRestaurant) return;
+
+    try {
+      const input = {
+        id: editingRestaurant.id,
+        name: newRestaurant.name,
+        description: newRestaurant.description,
+        city: newRestaurant.city,
+      };
+
+      const response = await client.graphql({
+        query: updateRestaurant,
+        variables: { input },
+      });
+
+      setRestaurants(
+        restaurants.map((r) => (r.id === editingRestaurant.id ? response.data.updateRestuarant : r))
+      );
+
+      setEditingRestaurant(null);
+      setNewRestaurant({ name: "", description: "", city: "" });
+    } catch (error) {
+      console.error("Error updating restaurant:", error);
+    }
+  };
+
+  const removeRestaurant = async (id: string) => {
+    try {
+      await client.graphql({
+        query: deleteRestaurant,
+        variables: { input: { id } },
+      });
+
+      setRestaurants(restaurants.filter((restaurant) => restaurant.id !== id));
+    } catch (error) {
+      console.error("Error deleting restaurant:", error);
+    }
+  };
+
   return (
     <div className="container">
       <h1>Restaurant Management</h1>
 
-      {/* Form to Add a New Restaurant */}
-      <form onSubmit={addRestaurant}>
+      {/* Form to Add or Edit a Restaurant */}
+      <form onSubmit={editingRestaurant ? updateRestaurantData : addRestaurant}>
         <input
           type="text"
           name="name"
@@ -104,7 +155,12 @@ function App() {
           onChange={handleChange}
           required
         />
-        <button type="submit">Add Restaurant</button>
+        <button type="submit">{editingRestaurant ? "Update Restaurant" : "Add Restaurant"}</button>
+        {editingRestaurant && (
+          <button type="button" onClick={() => setEditingRestaurant(null)}>
+            Cancel
+          </button>
+        )}
       </form>
 
       {/* Display List of Restaurants */}
@@ -112,6 +168,8 @@ function App() {
         {restaurants.map((restaurant) => (
           <li key={restaurant.id}>
             <strong>{restaurant.name}</strong> - {restaurant.city}
+            <button onClick={() => startEdit(restaurant)}>Edit</button>
+            <button onClick={() => removeRestaurant(restaurant.id)}>Delete</button>
           </li>
         ))}
       </ul>

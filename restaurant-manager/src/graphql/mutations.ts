@@ -27,7 +27,7 @@ export const createRestuarant = /* GraphQL */ `mutation CreateRestuarant(
   APITypes.CreateRestuarantMutationVariables,
   APITypes.CreateRestuarantMutation
 >;
-export const updateRestuarant = /* GraphQL */ `mutation UpdateRestuarant(
+export const updateRestaurant = /* GraphQL */ `mutation UpdateRestuarant(
   $input: UpdateRestuarantInput!
   $condition: ModelRestuarantConditionInput
 ) {
@@ -46,7 +46,7 @@ export const updateRestuarant = /* GraphQL */ `mutation UpdateRestuarant(
   APITypes.UpdateRestuarantMutationVariables,
   APITypes.UpdateRestuarantMutation
 >;
-export const deleteRestuarant = /* GraphQL */ `mutation DeleteRestuarant(
+export const deleteRestaurant = /* GraphQL */ `mutation DeleteRestuarant(
   $input: DeleteRestuarantInput!
   $condition: ModelRestuarantConditionInput
 ) {
