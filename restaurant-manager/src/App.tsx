@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Amplify } from "aws-amplify";
-import { generateClient } from "aws-amplify/api"; 
+import { generateClient } from "aws-amplify/api";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react"; 
 import { listRestuarants } from "./graphql/queries";
 import { createRestuarant, updateRestaurant, deleteRestaurant } from "./graphql/mutations";
+import "@aws-amplify/ui-react/styles.css"
 import { Restaurant } from "./types.ts";
 import awsExports from "./aws-exports";
 import { v4 as uuidv4 } from "uuid";
@@ -13,7 +15,9 @@ Amplify.configure(awsExports);
 // Create an Amplify API client
 const client = generateClient();
 
-function App() {
+function RestaurantApp() {
+  const { signOut } = useAuthenticator((context) => [context.user]); 
+
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
   const [newRestaurant, setNewRestaurant] = useState({
@@ -130,7 +134,7 @@ function App() {
     <div className="container">
       <h1>Restaurant Management</h1>
 
-      {/* Form to Add or Edit a Restaurant */}
+      <button onClick={signOut}>Sign Out</button>
       <form onSubmit={editingRestaurant ? updateRestaurantData : addRestaurant}>
         <input
           type="text"
@@ -139,14 +143,14 @@ function App() {
           value={newRestaurant.name}
           onChange={handleChange}
           required
-        />
+        /><br></br>
         <input
           type="text"
           name="description"
           placeholder="Description"
           value={newRestaurant.description}
           onChange={handleChange}
-        />
+        /><br></br>
         <input
           type="text"
           name="city"
@@ -154,7 +158,7 @@ function App() {
           value={newRestaurant.city}
           onChange={handleChange}
           required
-        />
+        /><br></br>
         <button type="submit">{editingRestaurant ? "Update Restaurant" : "Add Restaurant"}</button>
         {editingRestaurant && (
           <button type="button" onClick={() => setEditingRestaurant(null)}>
@@ -162,8 +166,6 @@ function App() {
           </button>
         )}
       </form>
-
-      {/* Display List of Restaurants */}
       <ul>
         {restaurants.map((restaurant) => (
           <li key={restaurant.id}>
@@ -175,6 +177,14 @@ function App() {
       </ul>
     </div>
   );
+
 }
 
+function App() {
+  return (
+    <Authenticator>
+      <RestaurantApp />
+    </Authenticator>
+  );
+}
 export default App;
