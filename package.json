@@ -1,10 +1,35 @@
 {
-  "dependencies": {
-    "uuid": "^11.1.0"
-  },
+  "name": "restaurant-manager",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
- "dev": "vite",
+   "dev": "vite",
   "build": "vite build",
-  "preview": "vite preview"
-}
+  "preview": "vite preview",
+  "lint": "eslint ."
+  },
+  "dependencies": {
+    "@aws-amplify/api": "^6.3.5",
+    "@aws-amplify/core": "^6.10.5",
+    "@aws-amplify/ui-react": "^6.9.3",
+    "aws-amplify": "^6.13.5",
+    "graphql": "^16.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@aws-amplify/cli": "^12.14.4",
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0"
+  }
 }
